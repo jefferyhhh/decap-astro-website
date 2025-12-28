@@ -1,9 +1,12 @@
 # Use DecapBridge auth (required)
 backend:
   name: git-gateway
-  repo: CodeStitchOfficial/Intermediate-Astro-Decap-CMS
+  repo: jefferyhhh/decap-astro-website
   branch: main
-  identity_url: https://auth.decapbridge.com/sites/1ea1e8dd-3c54-40d7-bbe1-74af6c8f16f6
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/c8b938b5-9880-4116-8403-3a4438095ff5/pkce
+  auth_token_endpoint: /sites/c8b938b5-9880-4116-8403-3a4438095ff5/token
   gateway_url: https://gateway.decapbridge.com
 
   # Quickly see who did what (optional)
@@ -15,11 +18,18 @@ backend:
     deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
     openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
 
+# Enable PKCE fields (optional, recommended)
+auth:
+  email_claim: email
+  first_name_claim: first_name
+  last_name_claim: last_name
+  avatar_url_claim: avatar_url
+
 # Logo for Decap login page. Change url to a link to the image you want to use, no file paths, must be a URL
 logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 
 # Add site link in DecapCMS (optional)
-site_url: https://intermediate-astro-kit-decap-cms.netlify.app
+site_url: https://decap-astro-website.netlify.app/
 
 media_folder: src/assets/images/blog # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
 public_folder: "@assets/images/blog" # Same folder as above, but using a path alias for easier referencing in the markdown files.
@@ -36,5 +46,10 @@ collections:
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Cover Image", name: "image", widget: "image" }
       - { label: "Image Caption", name: "imageAlt", widget: "string" }
-      - { label: "Is it a featured post?", name: "isFeatured", widget: "boolean", default: false }
+      - {
+          label: "Is it a featured post?",
+          name: "isFeatured",
+          widget: "boolean",
+          default: false,
+        }
       - { label: "Body", name: "body", widget: "markdown" }
